@@ -5,7 +5,7 @@ import requests
 from datetime import datetime
 from LauncherBase import Base
 from libs.version.version import get_version_data
-from libs.definition.table import *
+from libs.definition.data import *
 
 
 class class_instance:
@@ -23,31 +23,7 @@ class class_instance:
         self.VersionManifestURl = "https://piston-meta.mojang.com/mc/game/version_manifest_v2.json"
         self.fabric_installer_version_list = "https://meta.fabricmc.net/v2/versions/installer"
 
-        # Instance Info
-        self.INSTANCE_NAME = None
-        self.CLIENT_VERSION = None
-        self.VERSION_TYPE = None
-        self.LAUNCHER_VERSION = None
-        self.INSTANCE_FORMAT = None
-        self.CREATE_DATE = None
-        self.CONVERT_FROM_LEGACY = False
 
-        # Instance Structure
-        self.game_folder = f"{INSTANCE_GAME_FOLDER_NAME}"
-        self.assets_folder = f"{INSTANCE_GAME_FOLDER_NAME}/assets"
-
-        # Modify Info
-        self.ISVanilla = False
-        self.Modified = False
-        self.ModLoaderName = False
-        self.ModLoaderVersion = False
-
-        # Config
-        self.EnableConfig = True
-        self.CFGPath = "instance.bakelh.cfg"
-
-        self.RenameSuccessful = False
-        self.instance_path = None
 
     def create_instance_info(self, instance_name, client_version, version_type, is_vanilla, modify_status,
                              mod_loader_name, mod_loader_version, **kwargs):
@@ -377,11 +353,11 @@ class class_instance:
         except Exception as e:
             return False, f"FailedToReadInstanceInfo>Error: {e}"
 
-        info_list = [self.INSTANCE_NAME, self.CLIENT_VERSION, self.VERSION_TYPE, self.LAUNCHER_VERSION,
+        info_list = [self.INSTANCE_NAME, self.CLIENT_VERSION, self.version_type, self.LAUNCHER_VERSION,
                      self.INSTANCE_FORMAT, self.CREATE_DATE]
 
         if info_name is None:
-            return (True, self.INSTANCE_NAME, self.CLIENT_VERSION, self.VERSION_TYPE, self.LAUNCHER_VERSION,
+            return (True, self.INSTANCE_NAME, self.CLIENT_VERSION, self.version_type, self.LAUNCHER_VERSION,
                     self.INSTANCE_FORMAT, self.CREATE_DATE)
         else:
             if info_name == "instance_name":
@@ -453,6 +429,5 @@ class class_instance:
             json.dump(version_data, f, indent=4)
 
         return
-
 
 instance = class_instance()

@@ -1,1 +1,1 @@
-LIB_VERSION = 'Pre-0.9.1(development)'
+LIB_VERSION = '0.9.x-1_0_0-pre-comb'

@@ -2,8 +2,7 @@ import os
 import re
 from itertools import cycle
 from LauncherBase import Base
-from launcher.cli.Data import print_custom as print
-from libs.Utils.utils import download_file, multi_thread_download
+from libs.Utils.utils import download_file, multi_thread_download, multithread_download
 from libs.platform.platfrom import *
 
 
@@ -53,13 +52,13 @@ def libraries_check(libraries_folder, filter_names=None):
 
                 # Check for duplicates
                 if len(grouped) > 1:
-                    print(f"Found duplicate libraries for {lib_name} ({base_name}):", color='red')
+                    print(f"Found duplicate libraries for {lib_name} ({base_name}):")
                     for version, path, file in grouped:
                         print(f"  Version: {version}, Path: {path}, File: {file}")
 
                     # Identify the newest version
                     newest_version = grouped[0]
-                    print(f"  Keeping: {newest_version[1]}/{newest_version[2]}", color='lightgreen')
+                    print(f"  Keeping: {newest_version[1]}/{newest_version[2]}")
                     print()
 
                     for version, path, file in grouped[1:]:  # Skip the newest version
@@ -67,15 +66,15 @@ def libraries_check(libraries_folder, filter_names=None):
 
                         # Check if the file should be skipped
                         if should_skip_file(file):
-                            print(f"  Skipping deletion for filtered file: {file_to_delete}", color='yellow')
+                            print(f"  Skipping deletion for filtered file: {file_to_delete}")
                             continue
 
-                        print(f"  Deleting duplicate: {file_to_delete}", color='red')
+                        print(f"  Deleting duplicate: {file_to_delete}")
                         try:
                             os.remove(file_to_delete)  # Delete the duplicate file
-                            print(f"  Successfully deleted: {file_to_delete}", color='blue')
+                            print(f"  Successfully deleted: {file_to_delete}")
                         except OSError as e:
-                            print(f"  Error deleting {file_to_delete}: {e}", color='red')
+                            print(f"  Error deleting {file_to_delete}: {e}")
 
                     print()
 

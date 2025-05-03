@@ -7,7 +7,6 @@ import json
 import os
 import requests
 from LauncherBase import Base
-from launcher.cli.Data import print_custom as print
 
 mojang_version_manifest_url = "https://piston-meta.mojang.com/mc/game/version_manifest_v2.json"
 
@@ -89,9 +88,8 @@ def get_minecraft_version_url(version_id, **kwargs):
             break
 
     if version_url is None:
-        print(f"Unable to find same as requires version id: {version_id} in the version_manifest.", color='red',
-              tag="[DEBUG]")
-        print("Failed to get version data. Cause by unknown Minecraft version.", color='red', tag="[DEBUG]")
+        print(f"[DEBUG] Unable to find same as requires version id: {version_id} in the version_manifest.")
+        print("[DEBUG] Failed to get version data. Cause by unknown Minecraft version.")
         return None
 
     return version_url
