@@ -1,7 +1,6 @@
 import os
 import subprocess
 import time
-from multiprocessing import Process, Event
 from datetime import datetime
 from libs.lib import LIB_VERSION
 import platform
@@ -10,12 +9,12 @@ import threading
 import queue
 
 
-class clientInstance(Process):
+class clientInstance(threading.Thread):
     def __init__(self, name, commands, daemon=False):
         super().__init__()
         self.name = name
         self.commands = commands
-        self.start_stream_output = Event
+        self.start_stream_output = threading.Event
         self.client = None
         self.start_date = datetime.now()
         self.output = ""
@@ -33,7 +32,7 @@ class clientInstance(Process):
         return self.client.poll() is None
 
 
-class clientLauncherDaemon(Process):
+class clientLauncherDaemon(threading.Thread):
     def __init__(self):
         super().__init__()
         self.fresh_daemon = threading.Thread(target=self.checkClientPool)

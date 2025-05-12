@@ -96,7 +96,7 @@ def check_access_token_are_valid(access_token):
         username = r.json()["name"]
         uuid = r.json()["id"]
         return True
-    except requests.RequestException:
+    except requests.RequestException as e:
         return False
 
 
@@ -184,8 +184,7 @@ def get_account_username_and_uuid(accessToken):
     try:
         # Minecraft username and UUID
         r = requests.get("https://api.minecraftservices.com/minecraft/profile", headers={
-            "Authorization": f"Bearer {accessToken}"
-        })
+            "Authorization": f"Bearer {accessToken}"}, timeout=18)
         r.raise_for_status()
         username = r.json()["name"]
         uuid = r.json()["id"]
